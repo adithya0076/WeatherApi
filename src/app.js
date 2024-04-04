@@ -1,13 +1,17 @@
 const express = require('express');
-const cors = require("cors");
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
 const weatherroutes = require('../routes/weatherRoutes');
 
+app.use(cors()); // Allow all origins
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+
+// Define specific origins to allow
+// app.use(cors({
+//   origin: 'http://localhost:3003'
+// }));
 
 app.use('/weather', weatherroutes);
 

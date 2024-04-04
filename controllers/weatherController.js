@@ -48,7 +48,22 @@ const fetchweatherData = async (req, res) => {
       }
 };
 
+const fetchweathercityData = async (req, res) => {
+  try {
+      const { city } = req.query;
+      await mongoose.connect(dbUrl, connectionParams);
+      const weatherData = await Weather.find({district: city});
+      res.json(weatherData);
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      res.status(500).send('Error fetching weather data');
+    } finally {
+      mongoose.disconnect();
+    }
+};
+
 module.exports = {
     getWeather,
-    fetchweatherData
+    fetchweatherData,
+    fetchweathercityData
 };
